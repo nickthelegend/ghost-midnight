@@ -9,7 +9,7 @@
     "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-specifier-resolution=node --loader ts-node/esm src/matching.test.ts"
+    "test": "for f in src/*.test.ts; do echo \"▶ $f\"; node --experimental-specifier-resolution=node --loader ts-node/esm \"$f\" || exit 1; done"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.7",

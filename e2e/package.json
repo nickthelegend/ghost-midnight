@@ -1,0 +1,10 @@
+{
+  "name": "@ghost/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end tests: real ghost-cli client ↔ real ghost-server over HTTP",
+  "scripts": {
+    "test": "bun test --timeout 60000"
+  }
+}

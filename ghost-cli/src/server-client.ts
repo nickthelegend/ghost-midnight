@@ -34,10 +34,13 @@ export interface LoanDto {
   rate: number;
   lendIntentId: string;
   borrowIntentId: string;
-  status: 'awaiting-settlement' | 'active' | 'failed';
+  status: 'awaiting-settlement' | 'active' | 'repaid' | 'liquidated' | 'failed';
   createdAt: string;
   settledAt?: string;
   settlementTxId?: string;
+  repaidAt?: string;
+  repaymentTxId?: string;
+  liquidatedAt?: string;
 }
 
 export class GhostServerClient {
@@ -110,5 +113,13 @@ export class GhostServerClient {
 
   async confirmSettlement(loanId: string, txId: string): Promise<{ ok: boolean; loan: LoanDto }> {
     return this.request('POST', `/api/v1/loans/${loanId}/settle`, { txId });
+  }
+
+  async repayLoan(loanId: string, txId?: string): Promise<{ ok: boolean; loan: LoanDto }> {
+    return this.request('POST', `/api/v1/loans/${loanId}/repay`, txId ? { txId } : {});
+  }
+
+  async liquidateLoan(loanId: string): Promise<{ ok: boolean; loan: LoanDto }> {
+    return this.request('POST', `/api/v1/loans/${loanId}/liquidate`);
   }
 }
