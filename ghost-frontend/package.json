@@ -1,0 +1,44 @@
+{
+  "name": "ghost-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prepare:zk": "cp -r ../ghost-contract/src/managed/ghost/zkir public/zk/ghost/ && cp -r ../ghost-contract/src/managed/ghost/keys public/zk/ghost/"
+  },
+  "dependencies": {
+    "@ghost/ghost-contract": "file:../ghost-contract",
+    "@heroicons/react": "^2.2.0",
+    "@midnight-ntwrk/compact-runtime": "0.14.0",
+    "@midnight-ntwrk/dapp-connector-api": "4.0.1",
+    "@midnight-ntwrk/ledger-v7": "7.0.0",
+    "@midnight-ntwrk/midnight-js-contracts": "3.0.0",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "3.0.0",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "3.0.0",
+    "@midnight-ntwrk/midnight-js-network-id": "3.0.0",
+    "@midnight-ntwrk/midnight-js-types": "3.0.0",
+    "@midnight-ntwrk/wallet-sdk-address-format": "^3.0.0",
+    "clsx": "^2.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.5.1",
+    "react-router-dom": "^7.1.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.0",
+    "vite-plugin-top-level-await": "^1.5.0",
+    "vite-plugin-wasm": "^3.4.1"
+  }
+}

@@ -1,0 +1,43 @@
+# ── dependencies ──
+**/node_modules/
+.pnp
+.pnp.*
+
+# ── builds / generated ──
+**/dist/
+**/build/
+**/.next/
+**/out/
+*.tsbuildinfo
+# ZK artifacts copied into the frontend by prepare:zk (regenerated)
+ghost-frontend/public/zk/
+
+# ── env / secrets (keep .env.example) ──
+**/.env
+**/.env.local
+**/.env.*.local
+!**/.env.example
+# wallet seeds & deploy outputs
+deploy-preprod/wallet.json
+deploy-preprod/deployment.json
+**/wallet.json
+*.pem
+
+# ── Midnight runtime state ──
+**/midnight-level-db/
+**/.midnight-level-db/
+deploy-preprod/logs/
+ghost-contract/logs/
+# runtime JSON store
+ghost-server/data/*.json
+
+# ── logs / os / editor ──
+**/*.log
+.DS_Store
+Thumbs.db
+**/coverage/
+**/.vitest/
+**/.turbo/
+.idea/
+.vscode/*
+!.vscode/extensions.json

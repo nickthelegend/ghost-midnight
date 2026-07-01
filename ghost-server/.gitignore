@@ -1,0 +1,7 @@
+# deps
+node_modules/
+data/ghost-data.json
+
+# secrets — never commit real env
+.env
+.env.local

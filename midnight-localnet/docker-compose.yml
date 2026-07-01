@@ -1,0 +1,60 @@
+# GHOST Midnight localnet — node + indexer + proof server.
+# Recreates the standalone stack the docs referenced (../midnight-local-dev was
+# never in this repo). Verified to boot with the pinned image versions.
+#
+#   docker compose -f midnight-localnet/docker-compose.yml up -d
+#
+# Endpoints:
+#   node RPC/WS      ws://localhost:9944
+#   indexer GraphQL  http://localhost:8087/api/v3/graphql   (matches ghost-cli)
+#   proof server     http://localhost:6300
+
+name: ghost-midnight-localnet
+
+services:
+  node:
+    image: midnightntwrk/midnight-node:0.21.0
+    # CFG_PRESET=dev enables the mocked main-chain follower so the node runs
+    # standalone without a Cardano/postgres backend.
+    environment:
+      CFG_PRESET: "dev"
+    command:
+      - "--dev"
+      - "--rpc-external"
+      - "--rpc-cors=all"
+      - "--rpc-methods=unsafe"
+      - "--rpc-port=9944"
+      - "--base-path=/node/chain"
+    ports:
+      - "9944:9944"
+    volumes:
+      - node-data:/node/chain
+
+  indexer:
+    image: midnightntwrk/indexer-standalone:3.1.0
+    depends_on:
+      - node
+    environment:
+      # `secret` is required and absent from the image's default config.yaml.
+      # 32-byte hex; dummy value is fine for a local dev chain.
+      APP__INFRA__SECRET: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
+      APP__INFRA__NODE__URL: "ws://node:9944"
+      APP__APPLICATION__NETWORK_ID: "undeployed"
+      APP__INFRA__STORAGE__CNN_URL: "/data/indexer.sqlite"
+      APP__INFRA__LEDGER_DB__CNN_URL: "/data/ledger-db.sqlite"
+      APP__INFRA__API__PORT: "8088"
+    ports:
+      - "8087:8088" # host 8087 → container 8088 (ghost-cli points at :8087)
+    volumes:
+      - indexer-data:/data
+
+  proof-server:
+    image: midnightntwrk/proof-server:7.0.0
+    environment:
+      PORT: "6300"
+    ports:
+      - "6300:6300"
+
+volumes:
+  node-data:
+  indexer-data:
