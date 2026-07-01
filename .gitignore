@@ -11,6 +11,8 @@
 *.tsbuildinfo
 # ZK artifacts copied into the frontend by prepare:zk (regenerated)
 ghost-frontend/public/zk/
+# ZK artifacts synced into deploy-preprod (regenerated via `npm run sync-artifacts`)
+deploy-preprod/managed/
 
 # ── env / secrets (keep .env.example) ──
 **/.env

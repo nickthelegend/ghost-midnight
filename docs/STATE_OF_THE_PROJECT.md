@@ -19,6 +19,27 @@ them so a reviewer can tell the working demo from the design vision.
 
 ---
 
+## Verified runnable (2026-07)
+
+The local dev environment and test suites are set up and pass:
+
+- **Compact compiler `0.30.0`** installed; `ghost-contract` **compiles to 9 ZK
+  circuits** and its **8 simulator tests pass**.
+- **Localnet** (`midnight-localnet/`) boots node + indexer + proof server;
+  all three verified healthy.
+- **Test suites:** `ghost-server` 20 (unit + integration), `e2e` 3 (real CLI
+  client ↔ real server), `ghost-contract` 8. **31 tests, all green.** CI runs the
+  server + e2e + client build.
+- **On-chain readiness:** the compiled contract **loads under the v4 deploy SDK**
+  (`deploy-preprod && npm run verify-contract`) — the WASM-duplication trap is
+  cleared. Deploy is now env-driven: `npm run deploy:localnet` targets the local
+  stack; `npm run deploy` targets preprod.
+- **Still manual/next:** funding the deployer wallet on localnet (no faucet — use
+  a genesis account or the preprod faucet), and resolving the SDK `@3↔@4` split so
+  the CLI/frontend can *call* the deployed contract (see GAP_ANALYSIS §1).
+
+---
+
 ## Component map
 
 | Component | Stack | Talks to | Runs today? | How to run |

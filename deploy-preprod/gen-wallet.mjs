@@ -13,7 +13,8 @@ import { setNetworkId, getNetworkId } from '@midnight-ntwrk/midnight-js-network-
 import { HDWallet, Roles } from '@midnight-ntwrk/wallet-sdk-hd';
 import { createKeystore } from '@midnight-ntwrk/wallet-sdk-unshielded-wallet';
 
-setNetworkId('preprod');
+const NETWORK_ID = process.env.GHOST_NETWORK_ID || 'preprod';
+setNetworkId(NETWORK_ID);
 
 const WALLET_FILE = path.resolve('wallet.json');
 
@@ -43,7 +44,7 @@ const address = unshieldedKeystore.getBech32Address().asString();
 
 fs.writeFileSync(
   WALLET_FILE,
-  JSON.stringify({ seed, address, network: 'preprod' }, null, 2),
+  JSON.stringify({ seed, address, network: NETWORK_ID }, null, 2),
   { mode: 0o600 },
 );
 

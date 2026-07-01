@@ -4,8 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "verify-contract": "node verify-contract.mjs",
+    "sync-artifacts": "rm -rf managed && cp -r ../ghost-contract/src/managed ./managed",
     "gen-wallet": "node gen-wallet.mjs",
-    "deploy": "node deploy.mjs"
+    "gen-wallet:localnet": "GHOST_NETWORK_ID=undeployed node gen-wallet.mjs",
+    "deploy": "node deploy.mjs",
+    "deploy:localnet": "GHOST_NETWORK_ID=undeployed GHOST_INDEXER=http://localhost:8087/api/v3/graphql GHOST_INDEXER_WS=ws://localhost:8087/api/v3/graphql/ws GHOST_NODE=ws://localhost:9944 GHOST_PROOF_SERVER=http://localhost:6300 node deploy.mjs"
   },
   "dependencies": {
     "@midnight-ntwrk/compact-js": "2.5.0",

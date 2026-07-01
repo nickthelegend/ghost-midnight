@@ -37,12 +37,13 @@ import { WebSocket } from 'ws';
 
 globalThis.WebSocket = WebSocket;
 
-// ─── Network ───────────────────────────────────────────────────────
-const NETWORK_ID = 'preprod';
-const INDEXER = 'https://indexer.preprod.midnight.network/api/v3/graphql';
-const INDEXER_WS = 'wss://indexer.preprod.midnight.network/api/v3/graphql/ws';
-const NODE = 'https://rpc.preprod.midnight.network';
-const PROOF_SERVER = 'http://127.0.0.1:6301';
+// ─── Network (env-overridable so this deploys to preprod OR localnet) ──
+const NETWORK_ID = process.env.GHOST_NETWORK_ID || 'preprod';
+const INDEXER = process.env.GHOST_INDEXER || 'https://indexer.preprod.midnight.network/api/v3/graphql';
+const INDEXER_WS =
+  process.env.GHOST_INDEXER_WS || 'wss://indexer.preprod.midnight.network/api/v3/graphql/ws';
+const NODE = process.env.GHOST_NODE || 'https://rpc.preprod.midnight.network';
+const PROOF_SERVER = process.env.GHOST_PROOF_SERVER || 'http://127.0.0.1:6301';
 
 // ─── Wallet ────────────────────────────────────────────────────────
 const WALLET_FILE = path.resolve('wallet.json');
